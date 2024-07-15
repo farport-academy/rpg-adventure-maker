@@ -1,0 +1,11 @@
+
+<button mat-button [routerLink]="['/master']">
+    <mat-icon>arrow_back</mat-icon>
+</button>
+@if( character$ | async; as character){
+    <h1>{{character.name}}</h1>
+    <h2>{{character.class}}</h2>
+    <h3>{{character.race}}</h3>
+} @else {
+  <p>  Non è stato creato ancora nessun personaggio da questo utente! <p>
+}

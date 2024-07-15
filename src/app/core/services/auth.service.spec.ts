@@ -31,5 +31,45 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should have a storage property', () => {
+    expect(service.storage).toBeTruthy();
+  });
+
+  it('should sing up succesfully', () =>{
+
+    service.signup(mocks.signupData).subscribe((res)=> {
+      expect(res).toBe(mocks.mockResponse)
+    })
+    const mockRequest = httpMock.expectOne(`${service.apiUrl}/signup`);
+
+    expect(mockRequest.request.body).toEqual(mocks.signupData)
+    mockRequest.flush(mocks.mockResponse)
+  })
+
+  it('should sign in succesfully', () => {
+
+    service.login(mocks.loginData).subscribe((res) => {
+      expect(res).toBe(mocks.mockResponse);
+    });
+
+    const mockRequest = httpMock.expectOne(`${service.apiUrl}/signin`);
+
+    expect(mockRequest.request.method).toBe('POST');
+    expect(mockRequest.request.body).toBe(mocks.loginData);
+    
+    // la richiesta è conclusa
+    mockRequest.flush(mocks.mockResponse);
+
+    expect(service.isLoggedIn).toBeTrue();
+    expect(service.token).toBe(mocks.mockResponse.accessToken);
+    expect(service.partyId).toBe(mocks.mockResponse.user.partyId);
  
+  });
+
+  it('should sign out succesfully', () => {
+    service.logout();
+    expect(service.isLoggedIn).toBeFalse()
+    expect(service.token).toBeNull()
+    expect(service.partyId).toBeNull()
+  });
 });

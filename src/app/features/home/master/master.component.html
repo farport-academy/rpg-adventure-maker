@@ -3,5 +3,6 @@
 <app-table
     [data]="users"
     [columns]="tableConfig"
+    (onAction)="goToDetail($event)"
 />
 }

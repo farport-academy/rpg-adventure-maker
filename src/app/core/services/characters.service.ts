@@ -17,14 +17,14 @@ export class CharactersService extends EssentialService {
     this.apiPath = 'characters';
   }
 
-  getCharacter():Observable<Character>{
+  getCharacter(userID:number | null = null):Observable<Character>{
     return this.apiCall<Character[]>({
       type: 'GET',
       url: `${this.apiUrl}`,
       options: {
         params: new HttpParams()
           .set('partyId', this.authService.currentUser.partyId)
-          .set('userId', this.authService.currentUser.id)
+          .set('userID', userID || this.authService.currentUser.id)
       }
     }).pipe(
       map((res) => res[0])

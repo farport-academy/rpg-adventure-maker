@@ -10,6 +10,7 @@ export const userTypeGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const currentUser = authService.currentUser;
 
+  console.log(currentUser.type)
   switch (currentUser.type) {
     case UserTypes.MASTER:
       return checkDifferentUrlsAndRedirects(state.url,'/master',router);
