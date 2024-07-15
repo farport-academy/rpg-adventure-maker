@@ -9,9 +9,10 @@ import { PlayerComponent } from './player/player.component';
 import { LoadingModule } from "../../shared/loading/loading.module";
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import { EventsComponent } from './events/events.component';
 
 @NgModule({
-  declarations: [HomeComponent, MasterComponent, PlayerComponent, UserManagementComponent, CharacterDetailComponent],
+  declarations: [HomeComponent, MasterComponent, PlayerComponent, UserManagementComponent, CharacterDetailComponent, EventsComponent],
   imports: [CommonModule, HomeRoutingModule, SharedModule, LoadingModule],
 })
 export class HomeModule {}

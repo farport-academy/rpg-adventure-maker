@@ -5,6 +5,7 @@ import { MasterComponent } from './master/master.component';
 import { PlayerComponent } from './player/player.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CharacterDetailComponent } from './character-detail/character-detail.component';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   {
@@ -24,13 +25,21 @@ const routes: Routes = [
         component: CharacterDetailComponent
       },
       {
+        path: 'master/events',
+        component: EventsComponent
+      }, 
+      {
         path: 'player',
         component: PlayerComponent
       },
       {
         path: 'player/user-management',
         component: UserManagementComponent
-      },     
+      },   
+      {
+        path: 'player/events',
+        component: EventsComponent
+      }  
     ]
   },
 ];

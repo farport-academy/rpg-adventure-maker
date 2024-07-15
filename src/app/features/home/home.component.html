@@ -3,4 +3,7 @@
     [routerLink]="[authService.currentUser.type, 'user-management']"> 
         Modifica utente 
 </button>
+<button mat-flat-button [routerLink]="[authService.currentUser.type, 'events']"> 
+    Eventi
+</button>
 <router-outlet/>
