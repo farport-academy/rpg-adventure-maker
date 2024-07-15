@@ -16,13 +16,4 @@ import { LoadingService } from './loading.service';
 export class LoadingComponent {
   loadingService = inject(LoadingService)
 
-  ngOnInit(){
-    this.loadingService.loadingCount$.subscribe(
-      (loadingCount) => {
-        console.log('isLoading', this.loadingService.isLoading)
-        console.log('loadingCount', loadingCount)
-      }
-    )
-  }
-
 }

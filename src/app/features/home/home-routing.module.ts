@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { MasterComponent } from './master/master.component';
 import { PlayerComponent } from './player/player.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { CharacterDetailComponent } from './character-detail/character-detail.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'master/user-management',
         component: UserManagementComponent
+      },
+      {
+        path: 'master/character/:id',
+        component: CharacterDetailComponent
       },
       {
         path: 'player',
