@@ -3,3 +3,6 @@
     [startingValues]="userData$ | async"
     (onSubmit)="handleSubmit($event)"
 />
+<button class="back-button" mat-button [routerLink]="['../']">
+    Back to app
+</button>
