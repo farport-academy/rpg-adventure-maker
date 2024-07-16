@@ -14,20 +14,27 @@ export const loadingInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<unknown>> => {
   const loadingService = inject(LoadingService);
   // aumento il conteggio di loading
-  loadingService.loadingCount += 1;
-  return next(req).pipe(
-    catchError((_err) => {
-      // se c'è un errore setto a 0 il loading
-      loadingService.loadingCount = 0;
-      throw _err;
-    }),
-    finalize(() => {
-      // metto in sicurezza che il valore minimo sia sempre 0
-      if (loadingService.loadingCount < 0) {
+  const isLoadingDisabled = req.headers.get('disableLoading')
+ 
+  if(!isLoadingDisabled){
+    loadingService.loadingCount += 1;
+    return next(req).pipe(
+      catchError((_err) => {
+        // se c'è un errore setto a 0 il loading
         loadingService.loadingCount = 0;
-      } else {
-        loadingService.loadingCount -= 1;
-      }
-    })
-  );
+        throw _err;
+      }),
+      finalize(() => {
+          if (loadingService.loadingCount < 0) {
+            loadingService.loadingCount = 0;
+          } else {
+            loadingService.loadingCount -= 1;
+          }
+        // metto in sicurezza che il valore minimo sia sempre 0
+      })
+    );
+  }else{
+    return next(req)
+  }
+ 
 };
