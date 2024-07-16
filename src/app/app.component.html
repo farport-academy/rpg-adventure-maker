@@ -1,34 +1,28 @@
 <div class="app-shell mat-app-background">
   <header>
-   <app-header>
-     <div toolbar-logo>
-      <h2>🐲 Rpg Adventure Maker</h2>
-     </div>
-     <div toolbar-actions>
-      @if(authService.isLoggedIn){
+    <app-header>
+      <div toolbar-logo>
+        <h2>🐲 Rpg Adventure Maker</h2>
+      </div>
+      <div toolbar-actions>
+        @if(authService.isLoggedIn){
+        <button
+          mat-icon-button
+          [routerLink]="[authService.currentUser.type, 'user-management']"
+        >
+          <mat-icon>person</mat-icon>
+        </button>
         <button mat-icon-button (click)="handleLogout()">
           <mat-icon>power_settings_new</mat-icon>
         </button>
-      }
-     </div>
+        }
+      </div>
     </app-header>
-
-
   </header>
   <main>
-    <app-loading>
-      <ng-container loading>
-        <div class="spinner">
-          <mat-spinner></mat-spinner>
-        </div>
-      </ng-container>
-      <ng-container loaded>
-        <router-outlet/>
-      </ng-container>
-    </app-loading>
+    <router-outlet />
   </main>
   <footer>
     <p>© RPG AdvetureMaker Application</p>
   </footer>
 </div>
-

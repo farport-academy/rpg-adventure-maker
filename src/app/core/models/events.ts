@@ -4,3 +4,7 @@ export interface GameEvent {
     partyId: string,
     creationDate:string,
 }
+
+export interface GameEventId extends GameEvent{
+    id:number
+}

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { EssentialService } from './essentialService';
-import { GameEvent } from '../models/events';
+import { GameEvent, GameEventId } from '../models/events';
 import { BehaviorSubject, Observable, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { AuthService } from './auth.service';
 import { generateQueryParams } from '../utils/url.utils';
@@ -13,9 +13,9 @@ export class EventsService extends EssentialService {
   authService = inject(AuthService);
   destroy$!:Subject<any>
 
-  private eventsSubject = new BehaviorSubject<GameEvent[]>([]);
+  private eventsSubject = new BehaviorSubject<GameEventId[]>([]);
 
-  get events$(): Observable<GameEvent[]> {
+  get events$(): Observable<GameEventId[]> {
     return this.eventsSubject.asObservable();
   }
 
@@ -49,8 +49,8 @@ export class EventsService extends EssentialService {
     });
   }
 
-  getEventsList(): Observable<GameEvent[]> {
-    return this.apiCall<GameEvent[]>({
+  getEventsList(): Observable<GameEventId[]> {
+    return this.apiCall<GameEventId[]>({
       type: 'GET',
       url: this.apiUrl,
       options: {
