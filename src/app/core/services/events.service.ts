@@ -1,15 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { EssentialService } from './essentialService';
 import { GameEvent } from '../models/events';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { AuthService } from './auth.service';
 import { generateQueryParams } from '../utils/url.utils';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventsService extends EssentialService {
   authService = inject(AuthService);
+  destroy$!:Subject<any>
+
   private eventsSubject = new BehaviorSubject<GameEvent[]>([]);
 
   get events$(): Observable<GameEvent[]> {
@@ -39,7 +42,6 @@ export class EventsService extends EssentialService {
       },
     }).subscribe((res) => {
       if (res) {
-        this.getEventsList();
         this.snackbar.open('Evento Creato con successo', 'chiudi', {
           duration: 2000,
         });
@@ -47,8 +49,8 @@ export class EventsService extends EssentialService {
     });
   }
 
-  getEventsList(): void {
-    this.apiCall<GameEvent[]>({
+  getEventsList(): Observable<GameEvent[]> {
+    return this.apiCall<GameEvent[]>({
       type: 'GET',
       url: this.apiUrl,
       options: {
@@ -57,11 +59,27 @@ export class EventsService extends EssentialService {
           _sort: 'creationDate',
           _order: 'desc',
         }),
-      },
-    }).subscribe({
-      next: (res) => {
-        this.eventsSubject.next(res);
+        headers: new HttpHeaders().set(
+          'disableLoading', 'true'
+        )
       },
     });
+  }
+
+  pollEvents(): void {
+    this.destroy$ = new Subject()
+    timer(0, 5000)
+      .pipe(
+        switchMap(() => this.getEventsList()),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((res) => {
+        this.eventsSubject.next(res);
+      });
+  }
+
+  destroyPollEvents(){
+    this.destroy$.next(null)
+    this.destroy$.complete()
   }
 }

@@ -1,9 +1,12 @@
-<p>events works!</p>
-<pre>
+
+<section class="events-container">
+  <pre>
     {{events$ | async | json}}
 </pre>
-visualizzi la lista degli eventi
 ---
-@defer(when currentUserType === userTypes.MASTER){
-  <app-form [formConfig]="formConfig" (onSubmit)="handleCreation($event)"/>
+@if(currentUserType === userTypes.MASTER){
+  <div class="events-master-form">
+    <app-form [formConfig]="formConfig" (onSubmit)="handleCreation($event)"/>
+  </div>
 }
+</section>

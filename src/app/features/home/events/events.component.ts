@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { EssentialComponent } from '../../../core/components/essentialComponent';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserTypes } from '../../../core/models/users';
@@ -18,15 +23,18 @@ export class EventsComponent extends EssentialComponent implements OnInit {
   userTypes = UserTypes;
   formConfig = EventForm;
   currentUserType = this.authService.currentUser.type;
-  events$ = this.eventsService.events$
+  events$ = this.eventsService.events$;
 
-  ngOnInit(){
-    this.eventsService.getEventsList()
+  ngOnInit() {
+    this.eventsService.pollEvents();
   }
 
   handleCreation(event: Partial<GameEvent>) {
+    this.eventsService.createEvent(event);
+  }
 
-      this.eventsService.createEvent(event)
+  override ngOnDestroy(): void {
+      this.eventsService.destroyPollEvents()
 
   }
 }

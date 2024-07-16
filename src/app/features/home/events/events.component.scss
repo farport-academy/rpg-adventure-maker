@@ -1,0 +1,9 @@
+@use "@angular/material" as mat;
+@use "../../../../styles/theme/m3-theme.scss" as m3;
+@include mat.core();
+
+.events-master-form{
+    position: sticky;
+    bottom: 0;
+    background-color: mat.get-theme-color(m3.$light-theme, primary, 99);
+}
